@@ -1,5 +1,6 @@
 module MatrixUtil
 
+	#Finds the index of the first non-zero value in the row.
 	def self.first_nonzero_index(row)
 		i = 0
 		for x in row
@@ -8,6 +9,7 @@ module MatrixUtil
 		end
 	end
 	
+	#Compares which row has the lowest non-zero index.
 	def self.compare_nonzero_index(a, b)
 		for i in 0...a.length
 			if a[i] != b[i]
@@ -18,14 +20,13 @@ module MatrixUtil
 		return 0
 	end
 	
+	#Sorts the matrix by the non-zero index criteria, so rows with 
+	#zeroes at the beginning are put last.
 	def self.sort_nonzero_index(matrix)
 		matrix.sort { |a,b| compare_nonzero_index(a, b) }
 	end
 	
-	def self.solve_equation(matrix)
-	
-	end
-	
+	#Does a substraction between two rows such that the first non-zero index of b becomes 0
 	def self.equalize_rows(a, b)
 		ai = first_nonzero_index(a)
 		bi = first_nonzero_index(b)
@@ -40,6 +41,7 @@ module MatrixUtil
 		bx
 	end
 	
+	#Rearanges and opperates a matrix such that all values under its identity line are 0.
 	def self.equalize_matrix_down(matrix, a = 0)
 		return matrix if a == matrix.length
 		sort_nonzero_index(matrix)
@@ -53,6 +55,7 @@ module MatrixUtil
 		return equalize_matrix_down(m, a + 1)
 	end
 	
+	#Solves a system of equations using weighted values to find the proportions of each variable.
 	def self.solve_weighted_system(matrix, v = 1)
 		m = equalize_matrix_down(matrix)
 		l = m.length - 1
